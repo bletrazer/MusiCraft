@@ -1,0 +1,10 @@
+name: Musicraft
+version: 0.1
+description: Musics in minecraft
+author: Bletrazer
+main: fr.bletrazer.musicraft.Main
+commands:
+  musicraft:
+    description: commande pour gerer les musiques
+    aliases: [music]
+    permission: musicraft.admin
