@@ -1,4 +1,4 @@
-package fr.bletrazer.musicraft.music.instruction;
+package fr.bletrazer.musicraft.music;
 
 import java.io.File;
 import java.io.IOException;
@@ -169,10 +169,9 @@ public class Track extends TimerCore {
 					
 					Integer noteNumber = 1;
 					for(Object obj : noteslist) {
-						if(obj instanceof String) {
-							String str = (String) obj;
-							
-							if(!str.equalsIgnoreCase("empty") ){
+						if(obj != null) {
+							if(obj instanceof String) {
+								String str = (String) obj;
 								Note musicnote = Note.ValueOf(str);
 								
 								if(musicnote != null) {
@@ -183,11 +182,11 @@ public class Track extends TimerCore {
 									
 								}
 							} else {
-								toLoad.setNextnote(new Note());
+								load = false;
+								
 							}
 						} else {
-							load = false;
-							
+							toLoad.setNextnote(new Note());
 						}
 						
 						if(!load) {

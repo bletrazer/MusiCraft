@@ -18,7 +18,7 @@ public abstract class TimerCore {
 			@Override
 			public void run() {
 				onScheduling(getRunning());
-				System.out.println(runnable == null);
+				
 				if (!getRunning()) {
 					stop();
 				}

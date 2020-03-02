@@ -9,20 +9,20 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.bletrazer.musicraft.MessagesManager;
-import fr.bletrazer.musicraft.music.instruction.Track;
-import fr.bletrazer.musicraft.music.instruction.TrackHandler;
+import fr.bletrazer.musicraft.music.Track;
+import fr.bletrazer.musicraft.music.TrackHandler;
 
 public class Cmd_musicraft implements CommandExecutor {
 	
 	public static final String CMD_LABEl = "musicraft";
 	
-	private final List<String> ARGS_LOADBUNDLE = Arrays.asList(new String[] {"loadbundle", "lobu"});
+	private final List<String> ARGS_LOADMUSIC = Arrays.asList(new String[] {"loadmusic", "lobu"});
 	private final List<String> ARGS_LOADTRACK = Arrays.asList(new String[] {"loadtrack", "lotr"});
 	
-	private final List<String> ARGS_LISTBUNDLE = Arrays.asList(new String[] {"listbundle", "libu"});
+	private final List<String> ARGS_LISTMUSICS = Arrays.asList(new String[] {"listmusic", "libu"});
 	private final List<String> ARGS_LISTTRACK = Arrays.asList(new String[] {"listtrack", "litr"});
 	
-	private final List<String> ARGS_PLAYBUNDLE = Arrays.asList(new String[] {"playbundle", "plbu"});
+	private final List<String> ARGS_PLAYMUSIC = Arrays.asList(new String[] {"playmusic", "plbu"});
 	private final List<String> ARGS_PLAYTRACK = Arrays.asList(new String[] {"playtrack", "pltr"});
 	
 	private final List<String> ARGS_STOP = Arrays.asList(new String[] {"stop", "s"});
@@ -34,15 +34,15 @@ public class Cmd_musicraft implements CommandExecutor {
 		if(args.length == 0) {
 			
 		} else if (args.length == 1) {
-			if(ARGS_LOADBUNDLE.contains(args[0].toLowerCase()) || ARGS_LOADTRACK.contains(args[0].toLowerCase()) ) {
+			if(ARGS_LOADMUSIC.contains(args[0].toLowerCase()) || ARGS_LOADTRACK.contains(args[0].toLowerCase()) ) {
 				sender.sendMessage(String.format("Correct usage: /musicraft %s <name>", args[0].toLowerCase() ));
 				
-			} else if (ARGS_LISTBUNDLE.contains(args[0].toLowerCase()) ) {/*
-				sender.sendMessage(String.format("Loaded bundles:\n%s", TrackBundle.getTrackBundleCache().keySet().toString().replace("[", "").replace("]", "") ));*/
+			} else if (ARGS_LISTMUSICS.contains(args[0].toLowerCase()) ) {/*
+				sender.sendMessage(String.format("Loaded musicss:\n%s", TrackMusic.getTrackMusicCache().keySet().toString().replace("[", "").replace("]", "") ));*/
 				MessagesManager.sendMessage(sender, "§4", "this command is not finished now");//TODO
 				
 			} else if (ARGS_LISTTRACK.contains(args[0].toLowerCase()) ) {
-				sender.sendMessage(String.format("Loaded Bundles:\n%s", TrackHandler.get().keySet().toString().replace("[", "").replace("]", "") ));
+				sender.sendMessage(String.format("Loaded Musics:\n%s", TrackHandler.get().keySet().toString().replace("[", "").replace("]", "") ));
 				
 			} else if (ARGS_STOP.contains(args[0].toLowerCase()) ) {
 				if(sender instanceof Player) {
@@ -69,10 +69,10 @@ public class Cmd_musicraft implements CommandExecutor {
 					
 				}
 				 
-			} else if (ARGS_LOADBUNDLE.contains(args[0].toLowerCase()) ) {/*
-				//load bundle
-				if (TrackBundle.loadTrackBundle(args[1]) ) {
-					sender.sendMessage(String.format("Bundle \"%s\" successfully loaded!", args[1].toLowerCase() ));
+			} else if (ARGS_LOADMUSIC.contains(args[0].toLowerCase()) ) {/*
+				//load music
+				if (TrackMusic.loadTrackMusic(args[1]) ) {
+					sender.sendMessage(String.format("Music \"%s\" successfully loaded!", args[1].toLowerCase() ));
 					
 				} else {
 					sender.sendMessage("Faillure, check the console for more informations.");
@@ -80,11 +80,11 @@ public class Cmd_musicraft implements CommandExecutor {
 				}*/
 				MessagesManager.sendMessage(sender, "§4", "this command is not finished now");//TODO
 				
-			} else if(ARGS_PLAYBUNDLE.contains(args[0].toLowerCase()) ) { //TODO ne pas pouvoir lancé deux fois la meme track
+			} else if(ARGS_PLAYMUSIC.contains(args[0].toLowerCase()) ) { //TODO ne pas pouvoir lancé deux fois la meme track
 				MessagesManager.sendMessage(sender, "§4", "this command is not finished now");//TODO
 				/*
-					if(TrackBundle.playTrackBundle(args[1], null, false) ) {
-						sender.sendMessage(String.format("Now listening bundle: \"%s\".", args[1].toLowerCase()));
+					if(TrackMusic.playTrackMusic(args[1], null, false) ) {
+						sender.sendMessage(String.format("Now listening music: \"%s\".", args[1].toLowerCase()));
 						
 					} else {
 						sender.sendMessage(String.format("\"%s\" not found", args[1].toLowerCase() ));
@@ -109,10 +109,10 @@ public class Cmd_musicraft implements CommandExecutor {
 			} else {
 				sender.sendMessage("Unknown command.");
 			}
-		} else if (args.length == 3 && ARGS_PLAYBUNDLE.contains(args[0].toLowerCase()) && args[2].equalsIgnoreCase("repeat")) {
+		} else if (args.length == 3 && ARGS_PLAYMUSIC.contains(args[0].toLowerCase()) && args[2].equalsIgnoreCase("repeat")) {
 			/*
-			if(TrackBundle.playTrackBundle(args[1], null, true) ) {
-				sender.sendMessage(String.format("Now listening bundle: \"%s\".", args[1].toLowerCase()));
+			if(TrackMusic.playTrackMusic(args[1], null, true) ) {
+				sender.sendMessage(String.format("Now listening music: \"%s\".", args[1].toLowerCase()));
 				
 			} else {
 				sender.sendMessage(String.format("\"%s\" not found", args[1].toLowerCase() ));

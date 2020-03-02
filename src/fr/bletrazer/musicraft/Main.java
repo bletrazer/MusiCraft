@@ -3,7 +3,7 @@ package fr.bletrazer.musicraft;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.bletrazer.musicraft.commands.Cmd_musicraft;
-import fr.bletrazer.musicraft.music.instruction.Track;
+import fr.bletrazer.musicraft.music.Track;
 
 public class Main extends JavaPlugin {
 	private static Main main;
