@@ -9,8 +9,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.bletrazer.musicraft.MessagesManager;
-import fr.bletrazer.musicraft.music.instruction.Track;
-import fr.bletrazer.musicraft.music.instruction.TrackHandler;
+import fr.bletrazer.musicraft.music.Track;
+import fr.bletrazer.musicraft.music.TrackHandler;
 
 public class Cmd_musicraft implements CommandExecutor {
 	

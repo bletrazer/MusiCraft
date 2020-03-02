@@ -1,4 +1,4 @@
-package fr.bletrazer.musicraft.music.instruction;
+package fr.bletrazer.musicraft.music;
 
 import java.io.File;
 import java.io.IOException;
