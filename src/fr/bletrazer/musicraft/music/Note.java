@@ -8,14 +8,15 @@ import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
+import org.bukkit.craftbukkit.libs.org.apache.commons.lang3.StringUtils;
 import org.bukkit.entity.Player;
 
 import fr.bletrazer.musicraft.Main;
 
 public class Note {
-	private Sound note;
-	private Float volume = 1.0f;
-	private Float pitch = 1.0f;
+	private ArrayList<Sound> notes = new ArrayList<>();
+	private ArrayList<Float> volumes = new ArrayList<>();
+	private ArrayList<Float> pitches = new ArrayList<>();
 	
 	// --------------- constructors --------------------
 	
@@ -23,17 +24,10 @@ public class Note {
 
 	}
 	
-	public Note(Sound note) {
-		this.setNote(note);
-		this.setVolume(1f);
-		this.setPitch(1f);
-		
-	}
-	
-	public Note(Sound note, Float volume, Float pitch) {
-		this.setNote(note);
-		this.setVolume(volume);
-		this.setPitch(pitch);
+	public Note(ArrayList<Sound> notes, ArrayList<Float> volumes, ArrayList<Float> pitch) {
+		this.setNotes(notes);
+		this.setVolumes(volumes);
+		this.setPitches(pitches);
 	}
 	
 	// ------------------ public -----------------------
@@ -41,11 +35,17 @@ public class Note {
 	public Boolean playNote(ArrayList<UUID> recipientsUuid ) {
 		Boolean played = false;
 		
-		if(this.getNote() != null ) {
+		if(this.getNotes() != null ) {
 			for(UUID uuid : recipientsUuid ) {
 				Player player = Bukkit.getPlayer(uuid);
 				if(player != null && player.isOnline() ) {
-					player.playSound(player.getLocation().clone().add(0,  1,  0), this.getNote(), this.getVolume(), this.getPitch());
+					
+					for(Integer index = 0; index < this.getNotes().size(); index ++) {
+						Sound s = this.getNotes().get(index);
+						Float pitch = this.getPitches().size() -1 >= index ? this.getPitches().get(index) : 1.0f;
+						Float volume = this.getVolumes().size() -1 >= index ? this.getVolumes().get(index) : 1.0f;
+						player.playSound(player.getLocation().clone().add(0,  1,  0), s, volume, pitch);
+					}
 				}
 				
 			}
@@ -55,7 +55,30 @@ public class Note {
 	}
 	
 	public String toString() {
-		return String.format("Sound: %s, Volume: %s, Pitch: %s", this.getNote().name().toLowerCase());
+		List<String> stringlist = new ArrayList<>();
+		
+		for(Integer index = 0; index < this.getNotes().size(); index ++) {
+			List<String> templist = new ArrayList<>();
+			
+			Sound s = this.getNotes().get(index);
+			if(s != null) {
+				templist.add(String.format("Sound: %s", s.name().toLowerCase()) );
+			}
+			
+			Float pitch = this.getPitches().size() >= index ? null : this.getPitches().get(index);
+			if(pitch != null) {
+				templist.add(String.format("Pitch: %s", pitch) );
+			}
+			
+			String volume = this.getVolumes().size() >= index ? null : this.getVolumes().get(index).toString();
+			if(volume != null) {
+				templist.add(String.format("Volume: %s", volume) );
+			}
+			
+			stringlist.add(StringUtils.join(templist, ", ").replace("[", "").replace("]", "") );
+		}
+		
+		return StringUtils.join(stringlist, ", ").replace("[", "").replace("]", "");
 	}
 	
 	public static Note ValueOf(String str) {
@@ -76,15 +99,15 @@ public class Note {
 				
 					if((type.equalsIgnoreCase("sound") ) ) {
 						Sound sound = Sound.valueOf(value.toUpperCase());
-						res.setNote(sound);
+						res.addNote(sound);
 						
 					} else if (type.equalsIgnoreCase("volume") ) {
 						Float volume = Float.valueOf(value);
-						res.setVolume(volume);
+						res.addVolume(volume);
 						
 					} else if (type.equalsIgnoreCase("pitch") ) {
 						Float pitch = Float.valueOf(value);
-						res.setPitch(pitch);
+						res.addPitch(pitch);
 					}
 					
 				} catch(IllegalArgumentException e) {
@@ -93,7 +116,7 @@ public class Note {
 				}
 				
 			} else {
-				if(!part.equalsIgnoreCase("empty")) {
+				if(part != null ) {
 					res = null;
 					Main.getInstance().getLogger().log(Level.WARNING, String.format("Parsing error: no \"MusicNote\" data found!"));
 					break;
@@ -105,32 +128,59 @@ public class Note {
 		return res;
 	}
 	
-	
 	// ----------- setters || getters ------------------
+
+	public ArrayList<Sound> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(ArrayList<Sound> notes) {
+		this.notes = notes;
+	}
+
+	public void addNote(Sound sound) {
+		this.getNotes().add(sound);
+	}
+
+	public ArrayList<Float> getVolumes() {
+		return volumes;
+	}
+
+	public void setVolumes(ArrayList<Float> volumes) {
+		this.volumes = volumes;
+	}
+
+	public void addVolume(Float volume) {
+		this.getVolumes().add(volume);
+	}
+
+	public ArrayList<Float> getPitches() {
+		return pitches;
+	}
+
+	public void setPitches(ArrayList<Float> pitches) {
+		this.pitches = pitches;
+	}
+
+	public void addPitch(Float pitch) {
+		this.getPitches().add(pitch);
+	}
 	
-	public Sound getNote() {
-		return note;
-	}
-
-	public void setNote(Sound note) {
-		this.note = note;
-	}
-
-	public Float getVolume() {
-		return volume;
-	}
-
-	public void setVolume(Float volume) {
-		this.volume = volume;
-	}
-
-	public Float getPitch() {
-		return pitch;
-	}
-
-	public void setPitch(Float pitch) {
-		this.pitch = pitch;
-	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
